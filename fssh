@@ -1,0 +1,50 @@
+#!/usr/bin/python
+
+import argparse
+import subprocess
+import json
+
+from os.path import expanduser
+home = expanduser("~")
+
+
+# Commandline arguments parser
+parser = argparse.ArgumentParser(
+	prog='fssh',
+	description='A minimal ssh manager',
+)
+parser.add_argument('command', choices=[
+	"list", "ls",
+	"connect", "con",
+	"key",
+])
+parser.add_argument('connection', nargs="?")
+args = parser.parse_args()
+
+
+# Connections from configuration file
+json_data = open(home + "/.config/ssh-manager/connections.json")
+connections = json.load(json_data)["connections"]
+json_data.close()
+
+if args.command in ["list", "ls"]:
+	for name, connection in connections.items():
+		print "{0}: {1}@{2}".format(name, connection["user"], connection["host"])
+
+elif args.command in ["connect", "con"]:
+	if not args.connection or not args.connection in connections:
+		print "Unknown connection"
+	else:
+		connection = connections[args.connection]
+		ssh_arg = "{0}@{1}".format(connection["user"], connection["host"])
+		process = subprocess.Popen(['ssh', ssh_arg])
+		process.communicate()
+
+elif args.command in ["key"]:
+	if not args.connection or not args.connection in connections:
+		print "Unknown connection"
+	else:
+		connection = connections[args.connection]
+		ssh_arg = "{0}@{1}".format(connection["user"], connection["host"])
+		process = subprocess.Popen(["ssh-copy-id", "-i", home + "/.ssh/id_rsa.pub", ssh_arg])
+		process.communicate()
