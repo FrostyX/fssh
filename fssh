@@ -23,7 +23,7 @@ args = parser.parse_args()
 
 
 # Connections from configuration file
-json_data = open(home + "/.config/ssh-manager/connections.json")
+json_data = open(home + "/.config/fssh/connections.json")
 connections = json.load(json_data)["connections"]
 json_data.close()
 
