@@ -30,3 +30,6 @@ Connections are stored in `~/.config/fssh/connections.json` file. You have to cr
 
 	# Push ssh key
 	fssh key <connection-name>
+
+	# Open vnc window
+	fssh vnc <connection-name>
