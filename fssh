@@ -3,6 +3,7 @@
 import argparse
 import subprocess
 import json
+import os
 
 from os.path import expanduser
 home = expanduser("~")
@@ -17,6 +18,7 @@ parser.add_argument('command', choices=[
 	"list", "ls",
 	"connect", "con",
 	"key",
+	"vnc",
 ])
 parser.add_argument('connection', nargs="?")
 args = parser.parse_args()
@@ -50,3 +52,13 @@ elif args.command in ["key"]:
 		port = connection["port"] if "port" in connection else "22"
 		process = subprocess.Popen(["ssh-copy-id", "-i", home + "/.ssh/id_rsa.pub", ssh_arg, "-p", port])
 		process.communicate()
+
+elif args.command in ["vnc"]:
+	if not args.connection or not args.connection in connections:
+		print "Unknown connection"
+	else:
+		connection = connections[args.connection]
+		port = connection["port"] if "port" in connection else "22"
+		ssh_arg = "\'{0}@{1} -p {2}\'".format(connection["user"], connection["host"], port)
+		command = "vncviewer -via {0} localhost:{1}".format(ssh_arg, connection["vnc"]["slot"])
+		os.popen(command)

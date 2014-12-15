@@ -15,7 +15,7 @@ Connections are stored in `~/.config/fssh/connections.json` file. You have to cr
 		"connections":
 		{
 			"foo": {"host": "foo.bar.org",     "user": "frostyx"},
-			"bar": {"host": "bar.example.org", "user": "frostyx"},
+			"bar": {"host": "bar.example.org", "user": "frostyx", "vnc": {"slot": "4"}},
 			"baz": {"host": "qux.example.org", "user": "jakub",  "port": "2222"}
 		}
 	}
