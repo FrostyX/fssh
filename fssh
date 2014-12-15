@@ -37,7 +37,8 @@ elif args.command in ["connect", "con"]:
 	else:
 		connection = connections[args.connection]
 		ssh_arg = "{0}@{1}".format(connection["user"], connection["host"])
-		process = subprocess.Popen(['ssh', ssh_arg])
+		port = connection["port"] if "port" in connection else "22"
+		process = subprocess.Popen(['ssh', ssh_arg, '-p', port])
 		process.communicate()
 
 elif args.command in ["key"]:
@@ -46,5 +47,6 @@ elif args.command in ["key"]:
 	else:
 		connection = connections[args.connection]
 		ssh_arg = "{0}@{1}".format(connection["user"], connection["host"])
-		process = subprocess.Popen(["ssh-copy-id", "-i", home + "/.ssh/id_rsa.pub", ssh_arg])
+		port = connection["port"] if "port" in connection else "22"
+		process = subprocess.Popen(["ssh-copy-id", "-i", home + "/.ssh/id_rsa.pub", ssh_arg, "-p", port])
 		process.communicate()

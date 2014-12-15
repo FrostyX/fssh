@@ -1,5 +1,5 @@
 # fssh
- 
+
 A minimal ssh manager
 
 ## Features
@@ -16,7 +16,7 @@ Connections are stored in `~/.config/fssh/connections.json` file. You have to cr
 		{
 			"foo": {"host": "foo.bar.org",     "user": "frostyx"},
 			"bar": {"host": "bar.example.org", "user": "frostyx"},
-			"baz": {"host": "qux.example.org", "user": "jakub"}
+			"baz": {"host": "qux.example.org", "user": "jakub",  "port": "2222"}
 		}
 	}
 
@@ -24,9 +24,9 @@ Connections are stored in `~/.config/fssh/connections.json` file. You have to cr
 
 	# List all connections
 	fssh list
-	
+
 	# Connect
 	fssh connect <connection-name>
-	
+
 	# Push ssh key
 	fssh key <connection-name>
